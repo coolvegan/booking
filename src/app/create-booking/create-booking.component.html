@@ -1,16 +1,21 @@
-<div class="card">
+<div class="card bg-dark text-white">
   <div class="card-header"><h5>Create new Booking</h5></div>
-  <div class="card-body">
-    <form>
+  <form [formGroup]="bookingForm" (ngSubmit)="save()">
+    <div class="card-body">
       <div class="row mb-2">
         <div class="col">
           <label class="form-label">Id</label>
-          <input [(ngModel)]="booking.id" class="form-control" type="number" name="Id"/>
+          <input
+            formControlName="id"
+            class="form-control"
+            type="number"
+            name="Id"
+          />
         </div>
         <div class="col">
           <label class="form-label">Room Number</label>
           <input
-            [(ngModel)]="booking.roomNumber"
+            formControlName="roomNumber"
             class="form-control"
             type="number"
             name="roomNumber"
@@ -20,35 +25,43 @@
       <div class="row mb-2">
         <div class="col">
           <label class="form-label">Guest Name</label>
-          <input [(ngModel)]="booking.name" class="form-control" name="Name" />
+          <input
+          formControlName="name"
+          class="form-control" name="Name" />
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-4">
+        <div *ngIf="bookingForm.get('name')?.hasError('minlength')" class="text-danger">*Der Name ist kurz</div>
         </div>
       </div>
       <div class="row mb-2">
         <div class="col">
           <label class="form-label">Start Date</label>
           <input
-            [value]="booking.startDate | date:'yyyy-MM-dd'"
+            [value]="booking.startDate | date: 'yyyy-MM-dd'"
             class="form-control"
             type="date"
             name="StartDate"
+            formControlName="startDate"
             (input)="dateChanged($event, true)"
           />
         </div>
         <div class="col">
           <label class="form-label">End Date</label>
           <input
-            [value]="booking.endDate | date:'yyyy-MM-dd'"
+            [value]="booking.endDate | date: 'yyyy-MM-dd'"
             class="form-control"
             type="date"
             name="EndDate"
+            formControlName="endDate"
             (input)="dateChanged($event, false)"
-
           />
         </div>
       </div>
-    </form>
-  </div>
-  <div class="card-footer">
-    <button (click)="save()" class="btn btn-primary">Submit</button>
-  </div>
+    </div>
+    <div class="card-footer">
+      <button [disabled]="bookingForm.invalid" type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
 </div>

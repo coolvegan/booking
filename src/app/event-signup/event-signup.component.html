@@ -1,0 +1,43 @@
+<form #formSignup="ngForm">
+  <div class="card" bg-dark text-white>
+    <div class="card-header"><h5>Benachrichtungen</h5></div>
+    <div class="card-body">
+      <div class="row mb-2">
+        <div class="col">
+          <input
+            #inputMail="ngModel"
+            minlength="8"
+            email
+            [(ngModel)]="signupMail"
+            name="emailAdress"
+            class="form-control"
+            placeholder="Bitte Email Adresse eintragen"
+            required
+          />
+        </div>
+      </div>
+      <div *ngIf="inputMail.invalid && (inputMail.touched || inputMail.dirty)" class="row mb-2">
+        <div class="col">
+          <div *ngIf="inputMail.errors?.['required']" class="alert alert-danger">
+            E-Mail Adresse ist erforderlich.
+          </div>
+          <div *ngIf="inputMail.errors?.['minlength']" class="alert alert-danger">
+            Es sind mindestens acht Zeichen erforderlich.
+          </div>
+          <div *ngIf="inputMail.errors?.['email'] && !inputMail.hasError('minlength') " class="alert alert-danger">
+            Das ist keine gültige E-Mail Adresse.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button
+        [disabled]="formSignup.invalid"
+        (click)="onSubmit()"
+        class="btn btn-primary"
+      >
+        Eintragen
+      </button>
+    </div>
+  </div>
+</form>
